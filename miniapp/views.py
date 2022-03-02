@@ -378,7 +378,7 @@ def get_pdf(html, prescription_number):
     html_file.writelines(html)
     html_file.close()
     import pdfkit, webbrowser, os
-    config = pdfkit.configuration(wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
+    config = pdfkit.configuration(wkhtmltopdf="..\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
     pdfkit.from_file(file_name+'.html', file_name+'.pdf', configuration=config)
     filename='file:///'+os.getcwd()+'/'+file_name+'.html'
     filename='file:///'+os.getcwd()+'/'+file_name+'.pdf'
