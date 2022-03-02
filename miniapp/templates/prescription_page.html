@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Prescription{% endblock %}
+{% block content %}
+        <link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Berkshire Swash' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Baumans' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Cantata One' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Cabin' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet'>
+        <style>
+            .drname{
+                font-family: 'Berkshire Swash';
+                font-size: 30px;
+            }
+            .infodr{
+                font-family: garamond, serif;
+                font-size: 15px;
+            }
+            .big_pat{
+                font-size: 25px;
+            }
+            .small_pat{
+                font-size: 15px;
+                font-weight: lighter;
+            }
+            .big_pat, .small_pat{
+                font-family: 'Allerta Stencil';
+                padding-left: 7%;
+            }
+            .Drug, .INN{
+                font-family: 'Aldrich';
+            }
+            .Drug{
+                font-size: 17px;
+
+            }
+            .INN{
+                font-size: 13px;
+                font-weight: lighter;
+                font-style: italic;
+            }
+            th{
+                font-family: 'Cantata One';
+                font-size: 15px;
+                border: 1px solid navy
+            }
+            .Freq, .CMA, .Dur, .Qty, .Gap, .ROA, .Cond, .Fast{
+                font-family: 'Baumans';
+                font-size: 15px;
+            }
+            .diaginfo{
+                font-family: Cabin;
+                font-size: 20px;
+            }
+            span{
+                font-family: 'Righteous';
+            }
+        </style>
+        <table style="width: 100%;align-self: center;">
+        <tr>
+            <td rowspan="4" width="10%"><center><img src={% static 'images/Caduceus.svg' %} style="height: 100px;"></center></td>
+            <td class="drname" width="70%">Dr. {{ doc_info.0 }}</td>
+        </tr>
+        <tr>
+            <td class="infodr">{{ doc_info.1 }}</td>
+        </tr>
+        <tr>
+            <td class="infodr">{{ doc_info.3}}</td>
+        </tr>
+        <tr>
+            <td class="infodr">Mumbai - 400 008</td>
+        </tr>
+        </table>
+        <hr color="#000080" width="85%">
+        <table style="width: 100%;align-self: center;">
+            <tr>
+                <td class="big_pat">{{ pat_info.0 }}</td>
+                <td class="big_pat">{{ date }}</td>
+            </tr>
+            <tr>
+                <td class="small_pat">{{ pat_info.1 }}</td>
+            </tr>
+        </table>
+
+        <table border="1px" style="border: 1px solid navy" width=90% align="center">
+            <tr>
+                <th>Prescription</th>
+                <th>Frequency/Rhythm</th>
+                <th>Duration</th>
+                <th>Quantity</th>
+                <th style="border: 1px solid navy">Condition</th>
+            </tr>
+            {% for pred_dict in prescription %}
+            <tr>
+                <td style="border: 1px solid navy">
+                    <div class="Drug">{{ pred_dict.0 }}</div>
+                    <div class="INN">{{ pred_dict.1 }}</div>
+                </td>
+                <td style="border: 1px solid navy">
+                    <center>
+                        <div class="Freq">{{ pred_dict.2 }}</div>
+                        <hr color=#000080 width="70%">
+                        <div class="CMA">{{ pred_dict.3 }}</div>
+                    </center>
+                </td>
+                <td style="border: 1px solid navy">
+                    <center>
+                    <div class="Dur">{{ pred_dict.4 }}</div>
+                    <hr color=#000080 width="70%">
+                    <div class="Gap">{{ pred_dict.5 }}</div>
+                    </center>
+                </td>
+                <td style="border: 1px solid navy">
+                    <center>
+                        <div class="Qty">{{ pred_dict.6 }}</div>
+                    <hr color=#000080 width="70%">
+                    <div class="ROA">{{ pred_dict.7 }}</div>
+                    </center>
+                </td>
+                <td style="border: 1px solid navy">
+                    <center>
+                        <div class="Cond">{{ pred_dict.8 }}</div>
+                    <hr color=#000080 width="70%">
+                    <div class="Fast">{{ pred_dict.9 }}</div>
+                    </center>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <br><br><br><br><br><br><br>
+        <div align="right" style="padding-right: 5%;"><img src={{ request.user.doctor.sign.url }} style="height: 100px;"></div>
+        <div align="right" style="padding-right: 5%; font-family: cursive;">Dr. {{ doc_info.0 }}</div>
+        <footer><center>Made using <span>Prescribe.ME</span></center></footer>
+        <div class="p-2 w-full">
+        <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onclick="location.href='{% url 'send_prescription' %}'">Send Prescription</button>
+        </div>
+        {% endblock %}
